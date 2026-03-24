@@ -61,11 +61,16 @@ func TestBuildEnv(t *testing.T) {
 	t.Setenv("OPENAI_API_KEY", "")
 	t.Setenv("PATH", "/bin")
 	t.Setenv("HOME", "/tmp")
-	if _, err := buildEnv(nil); err == nil {
-		t.Fatalf("expected missing OPENAI_API_KEY error")
+	if _, err := buildEnv(nil); err != nil {
+		t.Fatalf("build env: %v", err)
 	}
 
-	t.Setenv("OPENAI_API_KEY", "key")
+	t.Setenv("PATH", "")
+	if _, err := buildEnv(nil); err == nil {
+		t.Fatalf("expected missing PATH error")
+	}
+
+	t.Setenv("PATH", "/bin")
 	env, err := buildEnv(map[string]string{"CUSTOM": "value"})
 	if err != nil {
 		t.Fatalf("build env: %v", err)
