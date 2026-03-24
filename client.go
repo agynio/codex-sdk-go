@@ -506,7 +506,7 @@ func buildEnv(overrides map[string]string) ([]string, error) {
 	for key, value := range overrides {
 		envMap[key] = value
 	}
-	required := []string{"OPENAI_API_KEY", "PATH", "HOME"}
+	required := []string{"PATH", "HOME"}
 	for _, key := range required {
 		if envMap[key] == "" {
 			return nil, fmt.Errorf("%s must be set", key)
